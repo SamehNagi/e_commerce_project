@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "966506147838",
+    "project_id": "asroo-shop-getx-76c0b",
+    "storage_bucket": "asroo-shop-getx-76c0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966506147838:android:ee1c5948621d0190e0daaf",
+        "android_client_info": {
+          "package_name": "com.example.e_commerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966506147838-fdjbpq3qn9f5jpj8947ad5v2g7d46q9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgYTTXP5UFDuhrjljniwaIwRwPlUYxgjc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966506147838-fdjbpq3qn9f5jpj8947ad5v2g7d46q9j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
