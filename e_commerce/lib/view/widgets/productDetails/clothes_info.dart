@@ -1,17 +1,21 @@
 import 'package:e_commerce/logic/controllers/product_controller.dart';
+import 'package:e_commerce/utils/theme.dart';
 import 'package:e_commerce/view/widgets/text.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:readmore/readmore.dart';
 
 class ClothesInfo extends StatelessWidget {
   final String title;
   final int productId;
   final double rate;
+  final String description;
   ClothesInfo({
     required this.title,
     required this.productId,
     required this.rate,
+    required this.description,
     Key? key,
   }) : super(key: key);
 
@@ -90,6 +94,29 @@ class ClothesInfo extends StatelessWidget {
                 direction: Axis.horizontal,
               ),
             ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          ReadMoreText(
+            description,
+            trimLines: 3,
+            textAlign: TextAlign.justify,
+            trimCollapsedText: "Show More",
+            trimExpandedText: "Show Less",
+            lessStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Get.isDarkMode ? pinkClr : mainColor,
+            ),
+            moreStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Get.isDarkMode ? pinkClr : mainColor,
+            ),
+            style: TextStyle(
+              fontSize: 16,
+              height: 2,
+              color: Get.isDarkMode ? Colors.white : Colors.black,
+            ),
           ),
         ],
       ),
