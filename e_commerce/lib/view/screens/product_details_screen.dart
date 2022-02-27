@@ -1,4 +1,5 @@
 import 'package:e_commerce/model/product_models.dart';
+import 'package:e_commerce/view/widgets/productDetails/add_cart.dart';
 import 'package:e_commerce/view/widgets/productDetails/clothes_info.dart';
 import 'package:e_commerce/view/widgets/productDetails/image_slider.dart';
 import 'package:e_commerce/view/widgets/productDetails/size_lits.dart';
@@ -30,8 +31,11 @@ class ProductDetailsScreen extends StatelessWidget {
                 rate: productModels.rating.rate,
                 description: productModels.description,
               ),
-              SizeList(),
-              // AddCart(),
+              const SizeList(),
+              AddCart(
+                price: productModels.price,
+                productModels: productModels,
+              ),
             ],
           ),
         ),
