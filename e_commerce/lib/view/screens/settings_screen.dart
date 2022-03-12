@@ -1,4 +1,5 @@
 import 'package:e_commerce/utils/theme.dart';
+import 'package:e_commerce/view/widgets/settings/dark_mode_widget.dart';
 import 'package:e_commerce/view/widgets/text.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          // DarkModeWidget(),
+          DarkModeWidget(),
           const SizedBox(
             height: 20,
           ),
@@ -42,6 +43,7 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
+          // LogOutWidget(),
         ],
       ),
       // body: Center(
