@@ -1,9 +1,13 @@
+import 'package:e_commerce/model/product_models.dart';
 import 'package:e_commerce/services/category_services.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController {
   var categoryNameList = <String>[].obs;
+  var categoryList = <ProductModels>[].obs;
+
   var isCategoryLoading = false.obs;
+  var areAllCategoriesLoading = false.obs;
 
   List<String> imageCategory = [
     "https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg",
@@ -28,6 +32,21 @@ class CategoryController extends GetxController {
       }
     } finally {
       isCategoryLoading(false);
+    }
+  }
+
+  getAllCategories(String nameCategory) async {
+    areAllCategoriesLoading(true);
+    categoryList.value = await AllCategoryServices.getAllCategory(nameCategory);
+
+    areAllCategoriesLoading(false);
+  }
+
+  getCategoryIndex(int index) async {
+    var categoryName = await getAllCategories(categoryNameList[index]);
+
+    if (categoryName.isNotEmpty) {
+      categoryList.value = categoryName;
     }
   }
 }
