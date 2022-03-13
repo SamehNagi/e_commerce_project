@@ -1,5 +1,6 @@
 import 'package:e_commerce/utils/theme.dart';
 import 'package:e_commerce/view/widgets/settings/dark_mode_widget.dart';
+import 'package:e_commerce/view/widgets/settings/language_widget.dart';
 import 'package:e_commerce/view/widgets/settings/logout_widget.dart';
 import 'package:e_commerce/view/widgets/settings/profile_widget.dart';
 import 'package:e_commerce/view/widgets/text.utils.dart';
@@ -41,7 +42,7 @@ class SettingsScreen extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          // LanguageWidget(),
+          LanguageWidget(),
           const SizedBox(
             height: 20,
           ),
