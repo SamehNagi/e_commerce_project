@@ -10,15 +10,26 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthController extends GetxController {
   bool isVisibility = false;
   bool isCheckBox = false;
-  var displayUSerName = '';
-  var displayUserPhoto = '';
+  var displayUSerName = ''.obs;
+  var displayUserPhoto = ''.obs;
+  var displayUSerEmail = ''.obs;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  var googleSingIn = GoogleSignIn();
   FaceBookModel? faceBookModel;
 
   var isSignedIn = false;
   final GetStorage authBox = GetStorage();
 
-  FirebaseAuth auth = FirebaseAuth.instance;
-  var googleSingIn = GoogleSignIn();
+  User? get userProfile => auth.currentUser;
+
+  @override
+  void onInit() {
+    displayUSerName.value =
+        (userProfile != null ? userProfile!.displayName : "")!;
+    displayUserPhoto.value =
+        (userProfile != null ? userProfile!.photoURL : "")!;
+    displayUSerEmail.value = (userProfile != null ? userProfile!.email : "")!;
+  }
 
   void visibility() {
     isVisibility = !isVisibility;
@@ -41,7 +52,7 @@ class AuthController extends GetxController {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        displayUSerName = name;
+        displayUSerName.value = name;
         auth.currentUser!.updateDisplayName(name);
       });
 
@@ -85,7 +96,7 @@ class AuthController extends GetxController {
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then(
-            (value) => displayUSerName = auth.currentUser!.displayName!,
+            (value) => displayUSerName.value = auth.currentUser!.displayName!,
           );
 
       isSignedIn = true;
@@ -125,8 +136,18 @@ class AuthController extends GetxController {
   void googleSignUpApp() async {
     try {
       final GoogleSignInAccount? googleUser = await googleSingIn.signIn();
-      displayUSerName = googleUser!.displayName!;
-      displayUserPhoto = googleUser.photoUrl!;
+      displayUSerName.value = googleUser!.displayName!;
+      displayUserPhoto.value = googleUser.photoUrl!;
+      displayUSerEmail.value = googleUser.email;
+
+      GoogleSignInAuthentication googleSignInAuthentication =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken,
+      );
+
+      await auth.signInWithCredential(credential);
 
       isSignedIn = true;
       authBox.write("auth", isSignedIn);
@@ -202,8 +223,9 @@ class AuthController extends GetxController {
       await auth.signOut();
       await googleSingIn.signOut();
       await FacebookAuth.i.logOut();
-      displayUSerName = '';
-      displayUserPhoto = '';
+      displayUSerName.value = '';
+      displayUserPhoto.value = '';
+      displayUSerEmail.value = '';
 
       isSignedIn = false;
       authBox.remove("auth");
