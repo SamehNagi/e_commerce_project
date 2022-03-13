@@ -1,6 +1,7 @@
 import 'package:e_commerce/utils/theme.dart';
 import 'package:e_commerce/view/widgets/settings/dark_mode_widget.dart';
 import 'package:e_commerce/view/widgets/settings/logout_widget.dart';
+import 'package:e_commerce/view/widgets/settings/profile_widget.dart';
 import 'package:e_commerce/view/widgets/text.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
-          // ProfileImage(),
+          ProfileWidget(),
           const SizedBox(
             height: 10,
           ),
