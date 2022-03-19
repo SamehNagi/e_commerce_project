@@ -9,6 +9,6 @@ String arabic = "Arabic 🇸🇦";
 String english = "English 🇺🇸";
 String french = "French 🇫🇷";
 
-String ar = "ar";
-String en = "en";
-String fr = "fr";
+String ara = "ar";
+String eng = "en";
+String fre = "fr";
