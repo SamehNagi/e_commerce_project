@@ -1,5 +1,10 @@
+import 'package:e_commerce/logic/controllers/payment_controller.dart';
+import 'package:e_commerce/main.dart';
+import 'package:e_commerce/routes/routes.dart';
+import 'package:e_commerce/utils/theme.dart';
 import 'package:e_commerce/view/widgets/text.utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DeliveryContainerWidget extends StatefulWidget {
   const DeliveryContainerWidget({Key? key}) : super(key: key);
@@ -10,8 +15,11 @@ class DeliveryContainerWidget extends StatefulWidget {
 }
 
 class _DeliveryContainerWidgetState extends State<DeliveryContainerWidget> {
+  final TextEditingController phoneController = TextEditingController();
   int radioContainerIndex = 1;
   bool changeColors = false;
+
+  final controller = Get.find<PaymentController>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +32,7 @@ class _DeliveryContainerWidgetState extends State<DeliveryContainerWidget> {
           address: "Egypt, sohag medanelshoban el moslmean",
           value: 1,
           color: changeColors ? Colors.white : Colors.grey.shade300,
+          icon: Container(),
           onChanged: (int? value) {
             setState(() {
               radioContainerIndex = value!;
@@ -34,19 +43,106 @@ class _DeliveryContainerWidgetState extends State<DeliveryContainerWidget> {
         const SizedBox(
           height: 10,
         ),
-        buildRadioContainer(
-          title: "Delivery",
-          name: "Walid Mahmoud",
-          phone: "93-123-7651",
-          address: "Egypt, sohag medanelshoban el moslmean",
-          value: 2,
-          color: changeColors ? Colors.grey.shade300 : Colors.white,
-          onChanged: (int? value) {
-            setState(() {
-              radioContainerIndex = value!;
-              changeColors = !changeColors;
-            });
-          },
+        Obx(
+          () => buildRadioContainer(
+            title: "Delivery",
+            name: "Walid Mahmoud",
+            phone: controller.phoneNumber.value,
+            address: "Egypt, sohag medanelshoban el moslmean",
+            value: 2,
+            color: changeColors ? Colors.grey.shade300 : Colors.white,
+            icon: InkWell(
+              onTap: () {
+                Get.defaultDialog(
+                  title: "Enter Your Phone Number",
+                  titleStyle: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  backgroundColor: Colors.white,
+                  radius: 10,
+                  textCancel: "Cancel",
+                  cancelTextColor: Colors.black,
+                  textConfirm: "Save",
+                  confirmTextColor: Colors.black,
+                  onCancel: () {
+                    Get.toNamed(Routes.paymentScreen);
+                  },
+                  onConfirm: () {
+                    Get.back();
+                    controller.phoneNumber.value = phoneController.text;
+                  },
+                  buttonColor: Get.isDarkMode ? pinkClr : mainColor,
+                  content: Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: TextField(
+                      controller: phoneController,
+                      cursorColor: Colors.black,
+                      maxLength: 11,
+                      keyboardType: TextInputType.text,
+                      onSubmitted: (value) {
+                        phoneController.text = value;
+                      },
+                      decoration: InputDecoration(
+                        fillColor: Get.isDarkMode
+                            ? pinkClr.withOpacity(0.1)
+                            : mainColor.withOpacity(0.2),
+                        focusColor: Colors.red,
+                        prefixIcon: Icon(
+                          Icons.phone,
+                          color: Get.isDarkMode ? pinkClr : mainColor,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            phoneController.clear();
+                          },
+                          icon: const Icon(
+                            Icons.close,
+                            color: Colors.black,
+                          ),
+                        ),
+                        hintText: "Enter Your Phone Number",
+                        hintStyle: const TextStyle(
+                          color: Colors.black45,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.contact_phone,
+                color: Get.isDarkMode ? pinkClr : mainColor,
+                size: 18,
+              ),
+            ),
+            onChanged: (int? value) {
+              setState(() {
+                radioContainerIndex = value!;
+                changeColors = !changeColors;
+              });
+            },
+          ),
         ),
       ],
     );
@@ -60,6 +156,7 @@ class _DeliveryContainerWidgetState extends State<DeliveryContainerWidget> {
     required String title,
     required String phone,
     required String address,
+    required Widget icon,
   }) {
     return Container(
       height: 120,
@@ -115,12 +212,23 @@ class _DeliveryContainerWidgetState extends State<DeliveryContainerWidget> {
                 const SizedBox(
                   height: 5,
                 ),
-                TextUtils(
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  text: phone,
-                  color: Colors.black,
-                  underLine: TextDecoration.none,
+                Row(
+                  children: [
+                    const Text("🇪🇬 +2 "),
+                    TextUtils(
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      text: phone,
+                      color: Colors.black,
+                      underLine: TextDecoration.none,
+                    ),
+                    const SizedBox(
+                      width: 100,
+                    ),
+                    SizedBox(
+                      child: icon,
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 5,
