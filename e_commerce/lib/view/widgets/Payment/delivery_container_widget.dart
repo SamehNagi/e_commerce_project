@@ -1,5 +1,5 @@
+import 'package:e_commerce/logic/controllers/auth_controller.dart';
 import 'package:e_commerce/logic/controllers/payment_controller.dart';
-import 'package:e_commerce/main.dart';
 import 'package:e_commerce/routes/routes.dart';
 import 'package:e_commerce/utils/theme.dart';
 import 'package:e_commerce/view/widgets/text.utils.dart';
@@ -20,6 +20,7 @@ class _DeliveryContainerWidgetState extends State<DeliveryContainerWidget> {
   bool changeColors = false;
 
   final controller = Get.find<PaymentController>();
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +47,9 @@ class _DeliveryContainerWidgetState extends State<DeliveryContainerWidget> {
         Obx(
           () => buildRadioContainer(
             title: "Delivery",
-            name: "Walid Mahmoud",
+            name: authController.displayUSerName.value,
             phone: controller.phoneNumber.value,
-            address: "Egypt, sohag medanelshoban el moslmean",
+            address: controller.address.value,
             value: 2,
             color: changeColors ? Colors.grey.shade300 : Colors.white,
             icon: InkWell(
@@ -141,6 +142,7 @@ class _DeliveryContainerWidgetState extends State<DeliveryContainerWidget> {
                 radioContainerIndex = value!;
                 changeColors = !changeColors;
               });
+              controller.updatePosition();
             },
           ),
         ),
